@@ -4,11 +4,16 @@ import MainContainer from './Components/MainContainer';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Shimmer from './Components/Shimmer';
 import InnerContainer from './Components/InnerContainer';
+import Watch from './Components/Watch';
 
 function App() {
   const appRouter = createBrowserRouter([
     { path: "/",
-     element: <MainContainer/>, 
+      element: <>
+      <Head/>
+      <MainContainer/>
+    </>,
+ 
      children:[
       {
          path: "/",
@@ -20,7 +25,7 @@ function App() {
      },
      {
       path:"/watch", 
-      element:<h1>this is watch page</h1>
+      element:<Watch/>
      }
 
     
@@ -36,7 +41,6 @@ function App() {
   ]);
   return (
     <div>
-      <Head/>
       <RouterProvider router={appRouter}/>
     </div>
   );
