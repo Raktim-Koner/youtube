@@ -2,19 +2,29 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Watch = () => {
-  // const location = useLocation();
-  // const queryParams = new URLSearchParams(location.search);
-  // const videoId = queryParams.get("v");
+  const [vId,setVId]=useState([])
 
-  // const [videoData, setVideoData] = useState(null);
   const [searchParams]=useSearchParams();
   console.log(useSearchParams());
   const videoId=searchParams.get("v");
   console.log(videoId);
 
+const isIdValid=async()=>{
+  const responce=await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=AIzaSyDAJlc9xSgznn66Mxbb99NjkvRI-yAX7Zs`)
+  const jsonResponce=await responce.json()
+  // console.log(jsonResponce)
+  setVId(jsonResponce.items)
+}
 
+useEffect(()=>{
+  isIdValid()
+},[])
+
+// console.log(isIdValid())
+// const validVideoId=/^[a-zA-Z0-9_-]{11}$/.test(videoId);
 
   if (!videoId) return <div>No video selected</div>;
+  if (!vId.length) return <div className="text-center">This video isn't availavle any more</div>;
 
   return (
     <div className="p-4 w-full">
